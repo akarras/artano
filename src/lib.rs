@@ -17,6 +17,7 @@ pub type Result<T, E = Error> = std::result::Result<T, E>;
 ///
 /// This will work only if your system actually has a font of the given name. Unfortunately,
 /// licensing restrictions on fonts pretty much require this kind of nonsense.
+#[cfg(font_kit)]
 pub fn load_font<'a>(name: &str) -> Result<Font<'a>> {
     use font_kit::{handle::Handle, source::SystemSource};
 

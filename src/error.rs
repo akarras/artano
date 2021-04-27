@@ -1,3 +1,4 @@
+#[cfg(font_kit)]
 use font_kit::error::SelectionError;
 use std::{error, fmt, io};
 
@@ -5,6 +6,7 @@ use std::{error, fmt, io};
 pub enum Error {
     IO(io::Error),
     Image(image::ImageError),
+    #[cfg(font_kit)]
     FontSelection(SelectionError),
     Font(String),
 }
@@ -14,6 +16,7 @@ impl fmt::Display for Error {
         match self {
             Error::IO(e) => e.fmt(f),
             Error::Image(e) => e.fmt(f),
+            #[cfg(font_kit)]
             Error::FontSelection(e) => e.fmt(f),
             Error::Font(name) => write!(f, "Font {:?} not found", name),
         }
@@ -25,6 +28,7 @@ impl error::Error for Error {
         match self {
             Error::IO(e) => Some(e),
             Error::Image(e) => Some(e),
+            #[cfg(font_kit)]
             Error::FontSelection(e) => Some(e),
 
             _ => None,
@@ -38,6 +42,7 @@ impl From<image::ImageError> for Error {
     }
 }
 
+#[cfg(font_kit)]
 impl From<SelectionError> for Error {
     fn from(e: SelectionError) -> Self {
         Error::FontSelection(e)

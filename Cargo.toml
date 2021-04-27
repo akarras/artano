@@ -16,7 +16,11 @@ Adds text to pictures.
 
 [dependencies]
 conv = "0.3"
-font-kit = "0.10"
+font-kit = {version = "0.10", optional = true}
 image = "0.23"
 imageproc = "0.22"
 rusttype = "0.9"
+
+[features]
+default = []
+font-load = ["font-kit"]
